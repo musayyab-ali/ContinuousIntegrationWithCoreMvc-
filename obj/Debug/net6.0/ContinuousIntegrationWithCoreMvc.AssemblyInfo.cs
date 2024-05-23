@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ContinuousIntegrationWithCoreMvc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b6331f4fecbdd42179c6322169264094d4dca2a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5a393b70a7b6cf3be2689af113a202e96f16c9b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ContinuousIntegrationWithCoreMvc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ContinuousIntegrationWithCoreMvc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
