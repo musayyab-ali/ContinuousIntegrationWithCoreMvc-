@@ -29,7 +29,7 @@ jobs:
         
       - name: Restore NuGet packages
         run: dotnet restore
-        working-directory: ${{ github.workspace }}\ContinuousIntegrationWithCoreMvc
+        working-directory: ${{ github.workspace }}
 
   build:
     runs-on: windows-latest
@@ -40,7 +40,7 @@ jobs:
 
       - name: Build
         run: dotnet build -c Debug
-        working-directory: ${{ github.workspace }}\ContinuousIntegrationWithCoreMvc
+        working-directory: ${{ github.workspace }}
 
   test:
     runs-on: windows-latest
@@ -51,7 +51,7 @@ jobs:
 
       - name: Run unit tests
         run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
-        working-directory: ${{ github.workspace }}\ContinuousIntegrationWithCoreMvc
+        working-directory: ${{ github.workspace }}
 
   deploy:
     runs-on: windows-latest
