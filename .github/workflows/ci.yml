@@ -9,16 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@latest
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@latest
         with:
           dotnet-version: '6.0'
       - name: Build and test
         run: |
           dotnet restore
           dotnet build -c Release
-          dotnet test
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
+      - name: Run unit tests
+        run: |
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
       - name: Deploy to GitHub
         run: |
           git config --global user.name 'Musayyab Ali'
