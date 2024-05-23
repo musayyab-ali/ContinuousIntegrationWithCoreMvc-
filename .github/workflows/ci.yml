@@ -13,6 +13,7 @@ jobs:
 
   setup-dotnet:
     runs-on: windows-latest
+    needs: [checkout]
     steps:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -21,34 +22,44 @@ jobs:
 
   restore:
     runs-on: windows-latest
-    steps:
-      - name: Restore NuGet packages
-        run: |
-          cd 'D:\Vs Projects\ContinuousIntegrationWithCoreMvc'
-          dotnet restore
     needs: [setup-dotnet]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Restore NuGet packages
+        run: dotnet restore
+        working-directory: ${{ github.workspace }}\ContinuousIntegrationWithCoreMvc
 
   build:
     runs-on: windows-latest
-    steps:
-      - name: Build
-        run: |
-          cd 'D:\Vs Projects\ContinuousIntegrationWithCoreMvc'
-          dotnet build -c Debug
     needs: [restore]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: dotnet build -c Debug
+        working-directory: ${{ github.workspace }}\ContinuousIntegrationWithCoreMvc
 
   test:
     runs-on: windows-latest
-    steps:
-      - name: Run unit tests
-        run: |
-          cd 'D:\Vs Projects\ContinuousIntegrationWithCoreMvc'
-          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
     needs: [build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run unit tests
+        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
+        working-directory: ${{ github.workspace }}\ContinuousIntegrationWithCoreMvc
 
   deploy:
     runs-on: windows-latest
+    needs: [test]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Deploy to GitHub
         run: |
           git config --global user.name 'Musayyab Ali'
@@ -56,4 +67,4 @@ jobs:
           git add .
           git commit -m "Automated deployment"
           git push origin main
-    needs: [test]
+        working-directory: ${{ github.workspace }}
