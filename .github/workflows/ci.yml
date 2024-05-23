@@ -1,0 +1,29 @@
+name: .NET Core CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0'
+      - name: Build and test
+        run: |
+          dotnet restore
+          dotnet build -c Release
+          dotnet test
+      - name: Deploy to GitHub
+        uses: actions/checkout@v2
+        run: |
+          git config --global user.name 'Musayyab Ali'
+          git config --global user.email 'meharmusayyab713@gmail.com'
+          git add .
+          git commit -m "Automated deployment"
+          git push origin main
