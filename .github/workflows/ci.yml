@@ -23,20 +23,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Restore NuGet packages
-        run: dotnet restore
+        run: |
+          cd MyProjectDirectory
+          dotnet restore ContinuousIntegrationWithCoreMvc.csproj
+    needs: [setup-dotnet]
 
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Build
-        run: dotnet build -c Debug
+        run: |
+          cd MyProjectDirectory
+          dotnet build -c Debug ContinuousIntegrationWithCoreMvc.csproj
     needs: [restore]
 
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Run unit tests
-        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
+        run: |
+          cd MyProjectDirectory
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80 MyProject.csproj
     needs: [build]
 
   deploy:
