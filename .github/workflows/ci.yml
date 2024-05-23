@@ -5,32 +5,50 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  checkout:
     runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+  setup-dotnet:
+    runs-on: windows-latest
+    steps:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0'
 
+  restore:
+    runs-on: windows-latest
+    steps:
       - name: Restore NuGet packages
         run: |
-          Set-Location D:/Vs Projects/ContinuousIntegrationWithCoreMvc
+          cd 'D:\Vs Projects\ContinuousIntegrationWithCoreMvc'
           dotnet restore
+    needs: [setup-dotnet]
 
+  build:
+    runs-on: windows-latest
+    steps:
       - name: Build
         run: |
-          Set-Location D:/Vs Projects/ContinuousIntegrationWithCoreMvc
+          cd 'D:\Vs Projects\ContinuousIntegrationWithCoreMvc'
           dotnet build -c Debug
+    needs: [restore]
 
+  test:
+    runs-on: windows-latest
+    steps:
       - name: Run unit tests
         run: |
-          Set-Location D:/Vs Projects/ContinuousIntegrationWithCoreMvc
+          cd 'D:\Vs Projects\ContinuousIntegrationWithCoreMvc'
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
+    needs: [build]
 
+  deploy:
+    runs-on: windows-latest
+    steps:
       - name: Deploy to GitHub
         run: |
           git config --global user.name 'Musayyab Ali'
@@ -38,3 +56,4 @@ jobs:
           git add .
           git commit -m "Automated deployment"
           git push origin main
+    needs: [test]
