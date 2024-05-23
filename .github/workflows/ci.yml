@@ -24,7 +24,8 @@ jobs:
     steps:
       - name: Restore NuGet packages
         run: |
-          cd D:/VS Projects
+          cd D:
+          cd VS Projects
           dotnet restore
     needs: [setup-dotnet]
 
@@ -33,7 +34,8 @@ jobs:
     steps:
       - name: Build
         run: |
-          cd D:/VS Projects
+          cd D:
+          cd VS Projects
           dotnet build -c Debug
     needs: [restore]
 
@@ -42,7 +44,8 @@ jobs:
     steps:
       - name: Run unit tests
         run: |
-          cd D:/VS Projects
+          cd D:
+          cd VS Projects
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80 MyProject.csproj
     needs: [build]
 
