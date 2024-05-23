@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Restore NuGet packages
         run: |
-          cd MyProjectDirectory
+          cd ContinuousIntegrationWithCoreMvc
           dotnet restore ContinuousIntegrationWithCoreMvc.csproj
     needs: [setup-dotnet]
 
