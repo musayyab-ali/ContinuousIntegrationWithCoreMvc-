@@ -24,8 +24,8 @@ jobs:
     steps:
       - name: Restore NuGet packages
         run: |
-          cd ContinuousIntegrationWithCoreMvc
-          dotnet restore ContinuousIntegrationWithCoreMvc.csproj
+          cd ~/workdir/../../D/VS Projects
+          dotnet restore
     needs: [setup-dotnet]
 
   build:
@@ -33,8 +33,8 @@ jobs:
     steps:
       - name: Build
         run: |
-          cd MyProjectDirectory
-          dotnet build -c Debug ContinuousIntegrationWithCoreMvc.csproj
+          cd ~/workdir/../../D/VS Projects
+          dotnet build -c Debug
     needs: [restore]
 
   test:
@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Run unit tests
         run: |
-          cd MyProjectDirectory
+          cd ~/workdir/../../D/VS Projects
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80 MyProject.csproj
     needs: [build]
 
