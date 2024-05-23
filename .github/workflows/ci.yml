@@ -10,18 +10,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0'
-      - name: Build and test
-        run: |
-          dotnet restore
-          dotnet build -c Release
-          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
+
+      - name: Restore NuGet packages
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Debug
+
       - name: Run unit tests
-        run: |
-          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
+        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
+
       - name: Deploy to GitHub
         run: |
           git config --global user.name 'Musayyab Ali'
