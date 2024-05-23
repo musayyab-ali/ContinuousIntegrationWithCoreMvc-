@@ -20,7 +20,6 @@ jobs:
           dotnet build -c Release
           dotnet test
       - name: Deploy to GitHub
-        uses: actions/checkout@v2
         run: |
           git config --global user.name 'Musayyab Ali'
           git config --global user.email 'meharmusayyab713@gmail.com'
