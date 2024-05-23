@@ -18,17 +18,17 @@ jobs:
 
       - name: Restore NuGet packages
         run: |
-          cd D:\Vs Projects\ContinuousIntegrationWithCoreMvc
+          Set-Location D:/Vs Projects/ContinuousIntegrationWithCoreMvc
           dotnet restore
 
       - name: Build
         run: |
-          cd D:\Vs Projects\ContinuousIntegrationWithCoreMvc
+          Set-Location D:/Vs Projects/ContinuousIntegrationWithCoreMvc
           dotnet build -c Debug
 
       - name: Run unit tests
         run: |
-          cd D:\Vs Projects\ContinuousIntegrationWithCoreMvc
+          Set-Location D:/Vs Projects/ContinuousIntegrationWithCoreMvc
           dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverageThreshold=80
 
       - name: Deploy to GitHub
